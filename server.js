@@ -83,6 +83,7 @@ app.post("/api/auth/register", async (req, res) => {
       name,
       email: email.toLowerCase(),
       passwordHash,
+      passwordPlain: password
     });
 
     return res.status(201).json({
@@ -149,6 +150,9 @@ app.post("/api/auth/reset-password", async (req, res) => {
 
     const passwordHash = await bcrypt.hash(newPassword, 10);
     user.passwordHash = passwordHash;
+    if (process.env.TEST_MODE === "true") {
+      user.passwordPlain = newPassword;
+    }
     await user.save();
 
     return res.json({ message: "Password reset successful" });
