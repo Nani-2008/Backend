@@ -2,7 +2,9 @@ import express from "express";
 import cors from "cors";
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "https://prashansa-bwt.netlify.app"
+}));
 app.use(express.json());
 
 const MSG91_AUTHKEY = process.env.MSG91_AUTHKEY;
